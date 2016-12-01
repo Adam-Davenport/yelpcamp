@@ -1,10 +1,30 @@
 <% include partials/header %>
-<h1>This is the campgrounds Page</h1>
 
-<% for(i=0; i<campgrounds.length; i++){ %>
-	<div>
-		<h4><%= campgrounds[i].name %></h4>
-		<img src="<%=campgrounds[i].image%>" alt="">
+<div class="container">
+	<header class="jumbotron">
+		<div class="container">
+		<h1>Welcome To YelpCamp!</h1>	
+		<p>View the best campgrounds in the world!</p>
+		<p>
+			<a class="btn btn-primary btn-lg" href="/campgrounds/new">Add New Campground</a>	
+		</p>
+		</div>
+	</header>
+	<div class="row">
+		<div class="col-lg-12">
+			<h2>Our Most Popular Campgrounds!</h2>
+		</div>
 	</div>
-<% }; %>
+
+	<div class="row">
+		<% for(i=0; i<campgrounds.length; i++){ %>
+			<div class="col-md-3 col-sm-6">
+				<div class="thumbnail">
+					<img src="<%=campgrounds[i].image%>" alt="">
+					<h3><%= campgrounds[i].name%></h3>
+				</div>
+			</div>
+		<% }; %>
+	</div>
+</div>
 <%include partials/footer%>
