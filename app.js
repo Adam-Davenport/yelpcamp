@@ -6,8 +6,10 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 var campgrounds = 
 	[
-		{name: "Boulder Creek", image: "http://haileyidaho.com/wp-content/uploads/2015/01/Stanley-lake-camping-Credit-Carol-Waller-2011.jpg"},
-		{name: "Brown County", image: "http://cdn-jpg2.theactivetimes.net/sites/default/files/camping.jpg" }
+		{name: "Boulder Creek", image: "https://fs.usda.gov/Internet/FSE_MEDIA/stelprdb5270335.jpg"},
+		{name: "Brown County", image: "http://cdn-jpg2.theactivetimes.net/sites/default/files/camping.jpg" },
+		{name: "Villa Falls", image: "http://usaywhat.com/wp-content/uploads/2015/01/greatlang1.jpg"},
+		{name: "Willis Wilds", image: "http://pioneercampground.com/site/wp-content/uploads/2015/02/campsite57_1.jpg"}
 	];
 
 app.set("view engine", "ejs");
