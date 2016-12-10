@@ -37,7 +37,7 @@ app.set("view engine", "ejs");
 
 app.get("/", function (req, res) {
 	res.render("landing", {title:"YelpCamp"});
-})
+});
 
 app.get("/campgrounds", function (req, res) {
 	// Get all campgrounds from DB
@@ -55,13 +55,20 @@ app.post("/campgrounds", function (req, res) {
 	var camp = req.body.camp;
 	var image = req.body.image;
 	var newCampground = {name:camp, image:image};
-	campgrounds.push(newCampground);
-	res.redirect("/campgrounds")
-})
+	// Create a new campground and save to DB
+	Campground.create(newCampground, function (error) {
+		if(error){
+			console.log(error);
+		}
+		else{
+			res.redirect('/campgrounds');
+		}
+	});
+});
 
 app.get("/campgrounds/new", function (req, res) {
 	res.render("new.ejs", {title:"Submit Campground"});
-})
+});
 
 app.listen(3000, function () {
 	console.log("The yelpcamp server has started.");
