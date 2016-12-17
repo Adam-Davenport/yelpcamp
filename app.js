@@ -10,7 +10,8 @@ app.use('/public', express.static(__dirname + '/public'));
 //SCHEMA SETUP
 var campgroundSchema = new mongoose.Schema({
 	name: String,
-	image: String
+	image: String,
+	description: String
 });
 var Campground = mongoose.model("Campground", campgroundSchema);
 
@@ -46,7 +47,7 @@ app.get("/campgrounds", function (req, res) {
 			console.log(error);
 		}
 		else{
-			res.render("campgrounds", {title:"Campgrounds", campgrounds:campgrounds});
+			res.render("index", {title:"Campgrounds", campgrounds:campgrounds});
 		}
 		});
 });
@@ -54,7 +55,8 @@ app.get("/campgrounds", function (req, res) {
 app.post("/campgrounds", function (req, res) {
 	var camp = req.body.camp;
 	var image = req.body.image;
-	var newCampground = {name:camp, image:image};
+	var description = req.body.description;
+	var newCampground = {name:camp, image:image, description:description};
 	// Create a new campground and save to DB
 	Campground.create(newCampground, function (error) {
 		if(error){
@@ -69,6 +71,18 @@ app.post("/campgrounds", function (req, res) {
 app.get("/campgrounds/new", function (req, res) {
 	res.render("new.ejs", {title:"Submit Campground"});
 });
+
+// Show route for campground must be declared after new or other routes directly under /campgrouds
+app.get("/campgrounds/:id", function (req ,res) {
+	Campground.findById(req.params.id, function (error, foundCampground) {
+		if(error){
+			console.log(err);
+		}
+		else{
+			res.render("show", {title: foundCampground.name, campground: foundCampground});
+		}
+	});
+})
 
 app.listen(3000, function () {
 	console.log("The yelpcamp server has started.");
