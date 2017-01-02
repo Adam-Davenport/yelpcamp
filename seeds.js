@@ -46,10 +46,11 @@ function seedDB(){
 					},
 					function (error, comment) {
 						if(error){
-							console.log(error)
+							console.log(error);
 						}
 						else{
 							campground.comments.push(comment);
+							console.log(campground);
 							console.log("Adding comments");
 						}
 					});
