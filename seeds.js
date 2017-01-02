@@ -1,6 +1,11 @@
+// Required modules
 var mongoose = require("mongoose");
-var Campground = require("./models/campground");
 
+//Required models
+var Campground = require("./models/campground");
+var Comment = require("./models/comment");
+
+// Sample data for campgrounds
 var data = [
 	{
 	name: "Willow Woods",
@@ -18,7 +23,7 @@ var data = [
 	description: "Test camp description"
 	}
 ];
-
+//Function to populate the database
 function seedDB(){
 	// Remove all campgrounds
 	Campground.remove({}, function (error) {
