@@ -5,4 +5,5 @@ var campgroundSchema = new mongoose.Schema({
 	image: String,
 	description: String
 });
+// Export the campgroundSchema as a model
 module.exports = mongoose.model("Campground", campgroundSchema);
