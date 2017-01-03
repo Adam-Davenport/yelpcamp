@@ -1,5 +1,5 @@
 // Required modules
-var mongoose = require("mongoose");
+// var mongoose = require("mongoose");
 
 //Required models
 var Campground = require("./models/campground");
@@ -30,7 +30,7 @@ function seedDB(){
 		if(error){
 			console.log(error);
 		}
-		console.log("Removed campgrounds")
+		console.log("Removed campgrounds");
 		// Adding some campgrounds
 		data.forEach( function(seed) {
 			Campground.create(seed, function (error, campground) {
@@ -50,7 +50,7 @@ function seedDB(){
 						}
 						else{
 							campground.comments.push(comment);
-							console.log(campground);
+							campground.save();
 							console.log("Adding comments");
 						}
 					});
