@@ -18,7 +18,20 @@ app.get("/", function (req, res) {
 	res.render("landing", {title:"YelpCamp"});
 });
 
+function findCampground(id){
+	return Campground.findById(id, foundItem);
+}
+function foundItem(error, foundCampground){
+	if(error){
+		console.log(error);
+	}
+	return foundCampground;
+}
+
+
+//=====================
 // Campground Routes
+//=====================
 app.get("/campgrounds", function (req, res) {
 	// Get all campgrounds from DB
 	Campground.find({}, function (error, campgrounds) {
@@ -26,7 +39,7 @@ app.get("/campgrounds", function (req, res) {
 			console.log(error);
 		}
 		else{
-			res.render("index", {title:"Campgrounds", campgrounds:campgrounds});
+			res.render("campgrounds/index", {title:"Campgrounds", campgrounds:campgrounds});
 		}
 		});
 });
@@ -48,7 +61,7 @@ app.post("/campgrounds", function (req, res) {
 });
 
 app.get("/campgrounds/new", function (req, res) {
-	res.render("new.ejs", {title:"Submit Campground"});
+	res.render("campgrounds/new.ejs", {title:"Submit Campground"});
 });
 
 // Show route for campground must be declared after new or other routes directly under /campgrouds
@@ -58,18 +71,29 @@ app.get("/campgrounds/:id", function (req ,res) {
 			console.log(error);
 		}
 		else{
-			console.log(foundCampground);
-			res.render("show", {title: foundCampground.name, campground: foundCampground});
+			res.render("campgrounds/show", {title: foundCampground.name, campground: foundCampground});
 		}
 	});
 });
-//********************************************************************************************
+//=================================================
 
-//Camground comment routes
+//======================================
+//   Camground comment routes
+//======================================
 app.get("/campgrounds/:id/comments/new", function(req, res){
-	res.render("comments/new");
-})
+	res.render("comments/new", {title: "Comment", id: req.params.id});
+});
 
-app.listen(3000, function () {
+app.post("/campgrounds/:id/comments", function (req, res) {
+	var campground = findCampground(req.params.id);
+	if(campground){
+		res.redirect("/campgrounds/" + req.params.id);
+	}
+	else{
+		res.send("Nope");
+	}
+});
+
+app.listen(3000, function() {
 	console.log("The yelpcamp server has started.");
 });
