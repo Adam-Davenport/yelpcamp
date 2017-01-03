@@ -2,8 +2,8 @@
 // var mongoose = require("mongoose");
 
 //Required models
-var Campground = require("./models/campground");
-var Comment = require("./models/comment");
+var Campground = require("./models/campground"),
+Comment = require("./models/comment");
 
 // Sample data for campgrounds
 var data = [
@@ -26,11 +26,11 @@ var data = [
 //Function to populate the database
 function seedDB(){
 	// Remove all campgrounds
+	console.log("Running Seeds");
 	Campground.remove({}, function (error) {
 		if(error){
 			console.log(error);
 		}
-		console.log("Removed campgrounds");
 		// Adding some campgrounds
 		data.forEach( function(seed) {
 			Campground.create(seed, function (error, campground) {
@@ -38,7 +38,6 @@ function seedDB(){
 					console.log(error);
 				}
 				else{
-					console.log("Adding Campgrounds");
 					// Creating a comment
 					Comment.create({
 						text: "Cool place, really chill.",
@@ -51,7 +50,6 @@ function seedDB(){
 						else{
 							campground.comments.push(comment);
 							campground.save();
-							console.log("Adding comments");
 						}
 					});
 				}
@@ -59,5 +57,4 @@ function seedDB(){
 		});	
 	})
 }
-
 module.exports = seedDB;
