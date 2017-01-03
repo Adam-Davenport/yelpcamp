@@ -3,41 +3,22 @@ var express = require("express"),
 	bodyParser = require("body-parser"),
 	mongoose = require("mongoose"),
 	Campground = require("./models/campground"),
-	seedDB = require("./seeds")
+	seedDB = require("./seeds");
 
-mongoose.connect("mongodb://localhost/yelp_camp")
+mongoose.connect("mongodb://localhost/yelp_camp");
 app.use(bodyParser.urlencoded({extended: true}));
 // Serve static files from the public folder
 app.use('/public', express.static(__dirname + '/public'));
 
 // Run the seed DB to remove and repopulate the database
 seedDB();
-
-/*Campground.create({name: "Boulder Creek", image: "https://fs.usda.gov/Internet/FSE_MEDIA/stelprdb5270335.jpg"},
-	function (err, campground) {
-		if(err){
-			console.log(err);
-		}
-		else {
-			console.log('Created new campgorund!');
-			console.log(campground);
-		}
-	});
-
-var campgrounds = 
-	[
-		{name: "Boulder Creek", image: "https://fs.usda.gov/Internet/FSE_MEDIA/stelprdb5270335.jpg"},
-		{name: "Brown County", image: "http://cdn-jpg2.theactivetimes.net/sites/default/files/camping.jpg" },
-		{name: "Villa Falls", image: "http://usaywhat.com/wp-content/uploads/2015/01/greatlang1.jpg"},
-		{name: "Willis Wilds", image: "http://pioneercampground.com/site/wp-content/uploads/2015/02/campsite57_1.jpg"}
-	];
-*/
 app.set("view engine", "ejs");
 
 app.get("/", function (req, res) {
 	res.render("landing", {title:"YelpCamp"});
 });
 
+// Campground Routes
 app.get("/campgrounds", function (req, res) {
 	// Get all campgrounds from DB
 	Campground.find({}, function (error, campgrounds) {
@@ -72,14 +53,21 @@ app.get("/campgrounds/new", function (req, res) {
 
 // Show route for campground must be declared after new or other routes directly under /campgrouds
 app.get("/campgrounds/:id", function (req ,res) {
-	Campground.findById(req.params.id, function (error, foundCampground) {
+	Campground.findById(req.params.id).populate("comments").exec(function (error, foundCampground) {
 		if(error){
-			console.log(err);
+			console.log(error);
 		}
 		else{
+			console.log(foundCampground);
 			res.render("show", {title: foundCampground.name, campground: foundCampground});
 		}
 	});
+});
+//********************************************************************************************
+
+//Camground comment routes
+app.get("/campgrounds/:id/comments/new", function(req, res){
+	res.render("comments/new");
 })
 
 app.listen(3000, function () {
