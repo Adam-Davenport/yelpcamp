@@ -18,14 +18,20 @@ app.get("/", function (req, res) {
 	res.render("landing", {title:"YelpCamp"});
 });
 
+// Finding a campground
 function findCampground(id){
-	return Campground.findById(id, foundItem);
+	return Campground.findById(id, findItem);
 }
-function foundItem(error, foundCampground){
+
+// Can be used with any mongoose search
+function findItem(error, item){
 	if(error){
 		console.log(error);
+		return null;
 	}
-	return foundCampground;
+	else {
+		return item;
+	}
 }
 
 
@@ -81,7 +87,15 @@ app.get("/campgrounds/:id", function (req ,res) {
 //   Camground comment routes
 //======================================
 app.get("/campgrounds/:id/comments/new", function(req, res){
-	res.render("comments/new", {title: "Comment", id: req.params.id});
+	// var campground = findCampground(req.params.id);
+	Campground.findById(req.params.id, function (error, campground) {
+		if(error){
+			console.log(error);
+		}
+		else{
+			res.render("comments/new", {title: "Comment", id: req.params.id, campground: campground});
+		}
+	});
 });
 
 app.post("/campgrounds/:id/comments", function (req, res) {
@@ -90,9 +104,10 @@ app.post("/campgrounds/:id/comments", function (req, res) {
 		res.redirect("/campgrounds/" + req.params.id);
 	}
 	else{
-		res.send("Nope");
+		res.send("Campground not found");
 	}
 });
+//=================================================
 
 app.listen(3000, function() {
 	console.log("The yelpcamp server has started.");
