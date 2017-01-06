@@ -4,6 +4,7 @@ var express = require("express"),
 	bodyParser = require("body-parser"),
 	mongoose = require("mongoose"),
 	Campground = require("./models/campground"),
+	Comment = require("./models/comment");
 	seedDB = require("./seeds");
 
 // Connect to database
@@ -109,13 +110,24 @@ app.get("/campgrounds/:id/comments/new", function (req, res) {
 
 // Create route
 app.post("/campgrounds/:id/comments", function (req, res) {
-	var campground = findCampground(req.params.id);
-	if (campground) {
-		res.redirect("/campgrounds/" + req.params.id);
-	}
-	else {
-		res.send("Campground not found");
-	}
+    Campground.findById(req.params.id, function (error, campground) {
+        if (error) {
+            console.log(error);
+            res.redirect("/campgrounds");
+        }
+        else {
+        	Comment.create(req.body.comment, function(error, comment){
+        		if(error){
+        			console.log(error);
+				}
+				else{
+        			campground.comments.push(comment);
+        			campground.save();
+        			res.redirect("/campgrounds/" + campground._id);
+				}
+			})
+        }
+    });
 });
 //=================================================
 
