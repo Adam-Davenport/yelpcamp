@@ -1,16 +1,16 @@
 <%include ../partials/header %>
 <div class="container">
 	<div class="row">
-	<h1>Create A New Comment For <%=campground%></h1>
+	<h1>Create A New Comment For <%=campground.name%></h1>
 	<form action="/campgrounds/<%=id%>/comments" method="post">
 	<div class="form-group">
-		<input type="text" class="form-control" name="text" placeholder="Comment">
+		<input type="text" class="form-control" name="comment[text]" placeholder="Comment">
 	</div>	
 	<div class="form-group">
-		<input type="text" class="form-control" name="author" placeholder="Author">
+		<input type="text" class="form-control" name="comment[author]" placeholder="Author">
 	</div>
 	<div class="form-group">
-		<button class="btn btn-lg btn-default btn-block">Submit</button>
+		<button class="btn btn-lg btn-default btn-block btn-primary">Submit</button>
 	</div>
 	</form>
 	</div>
