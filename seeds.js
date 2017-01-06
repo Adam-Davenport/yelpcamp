@@ -10,17 +10,17 @@ var data = [
 	{
 	name: "Willow Woods",
 	image: "https://farm2.staticflickr.com/1281/4684194306_18ebcdb01c.jpg",
-	description: "Test camp description"
+	description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam malesuada, ipsum in viverra fringilla, nulla augue imperdiet ligula, ut convallis urna leo in orci. Aliquam libero diam, iaculis in dolor nec, pharetra ullamcorper urna. Vestibulum vitae velit a odio tincidunt placerat. Fusce pharetra mi nulla. Aliquam augue dui, tempus id eros eget, tempus faucibus ligula. Quisque sit amet augue at nisi ultricies dignissim. Nullam vestibulum gravida sapien, molestie dapibus nulla posuere sit amet. Vestibulum egestas dolor id sapien condimentum ultricies. Vestibulum lacinia, nibh a varius cursus, mauris nunc condimentum ante, ac ullamcorper felis urna at dui. Aliquam quis enim libero. Maecenas in varius urna."
 	},
 	{
 	name: "Bronze Beach",
 	image: "https://farm4.staticflickr.com/3872/14435096036_39db8f04bc.jpg",
-	description: "Test camp description"
+	description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam malesuada, ipsum in viverra fringilla, nulla augue imperdiet ligula, ut convallis urna leo in orci. Aliquam libero diam, iaculis in dolor nec, pharetra ullamcorper urna. Vestibulum vitae velit a odio tincidunt placerat. Fusce pharetra mi nulla. Aliquam augue dui, tempus id eros eget, tempus faucibus ligula. Quisque sit amet augue at nisi ultricies dignissim. Nullam vestibulum gravida sapien, molestie dapibus nulla posuere sit amet. Vestibulum egestas dolor id sapien condimentum ultricies. Vestibulum lacinia, nibh a varius cursus, mauris nunc condimentum ante, ac ullamcorper felis urna at dui. Aliquam quis enim libero. Maecenas in varius urna."
 	},
 	{
 	name: "Endor",
 	image: "https://farm9.staticflickr.com/8457/7930235502_df747573ca.jpg",
-	description: "Test camp description"
+	description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam malesuada, ipsum in viverra fringilla, nulla augue imperdiet ligula, ut convallis urna leo in orci. Aliquam libero diam, iaculis in dolor nec, pharetra ullamcorper urna. Vestibulum vitae velit a odio tincidunt placerat. Fusce pharetra mi nulla. Aliquam augue dui, tempus id eros eget, tempus faucibus ligula. Quisque sit amet augue at nisi ultricies dignissim. Nullam vestibulum gravida sapien, molestie dapibus nulla posuere sit amet. Vestibulum egestas dolor id sapien condimentum ultricies. Vestibulum lacinia, nibh a varius cursus, mauris nunc condimentum ante, ac ullamcorper felis urna at dui. Aliquam quis enim libero. Maecenas in varius urna."
 	}
 ];
 //Function to populate the database
