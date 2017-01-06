@@ -81,6 +81,7 @@ app.get("/campgrounds/new", function (req, res) {
 
 // Show route for campground must be declared after new or other routes directly under campgrounds directory
 app.get("/campgrounds/:id", function (req, res) {
+	// Find campground and populate the comments from the DB
 	Campground.findById(req.params.id).populate("comments").exec(function (error, foundCampground) {
 		if (error) {
 			console.log(error);
@@ -97,10 +98,11 @@ app.get("/campgrounds/:id", function (req, res) {
 //======================================
 // New route
 app.get("/campgrounds/:id/comments/new", function (req, res) {
-	// var campground = findCampground(req.params.id);
+	// Find campground by the id
 	Campground.findById(req.params.id, function (error, campground) {
 		if (error) {
 			console.log(error);
+			res.redirect("/campgrounds");
 		}
 		else {
 			res.render("comments/new", {title: "Comment", id: req.params.id, campground: campground});
@@ -110,24 +112,25 @@ app.get("/campgrounds/:id/comments/new", function (req, res) {
 
 // Create route
 app.post("/campgrounds/:id/comments", function (req, res) {
-    Campground.findById(req.params.id, function (error, campground) {
-        if (error) {
-            console.log(error);
-            res.redirect("/campgrounds");
-        }
-        else {
-        	Comment.create(req.body.comment, function(error, comment){
-        		if(error){
-        			console.log(error);
+	// Find the campground by ID
+	Campground.findById(req.params.id, function (error, campground) {
+		if (error) {
+				console.log(error);
+				res.redirect("/campgrounds");
+		}
+		else {
+			Comment.create(req.body.comment, function(error, comment){
+				if(error){
+					console.log(error);
 				}
 				else{
-        			campground.comments.push(comment);
-        			campground.save();
-        			res.redirect("/campgrounds/" + campground._id);
+					campground.comments.push(comment);
+					campground.save();
+					res.redirect("/campgrounds/" + campground._id);
 				}
-			})
-        }
-    });
+		})
+		}
+	});
 });
 //=================================================
 
