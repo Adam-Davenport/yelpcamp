@@ -1,5 +1,5 @@
-var mongoose = require('mongoose'),
-		plm = require('passport-local-mongoose'),
+var mongoose = require("mongoose"),
+		plm = require("passport-local-mongoose"),
 
 //  Define the User Schema
 		userSchema = new mongoose.Schema({
@@ -11,4 +11,4 @@ var mongoose = require('mongoose'),
 userSchema.plugin(plm)
 
 // Export the model
-module.exports = mongoose.model("User", userSchema)
+module.exports = mongoose.model('User', userSchema)
