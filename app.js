@@ -168,6 +168,25 @@ app.post('/register', function(req, res){
 	})
 })
 
+// Show login form
+app.get('/login', function(req, res){
+	res.render('login')
+})
+
+// Handle loggin into the site
+app.post('/login', passport.authenticate('local',
+	{
+		successRedirect: '/campgrounds',
+		failureRedirect: '/login'
+	}
+))
+
+// Handle loggin out of the site
+app.get('/logout', function (req, res){
+	req.logout()
+	res.redirect('/')
+})
+
 //=================================================
 
 // Set the app to listen on port 3000
