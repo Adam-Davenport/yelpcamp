@@ -109,7 +109,7 @@ app.get('/campgrounds/:id', function (req, res) {
 //   Camground comment routes
 //======================================
 // New route
-app.get('/campgrounds/:id/comments/new', function (req, res) {
+app.get('/campgrounds/:id/comments/new', isLoggedIn, function (req, res) {
 	// Find campground by the id
 	Campground.findById(req.params.id, function (error, campground) {
 		if (error) {
@@ -123,7 +123,7 @@ app.get('/campgrounds/:id/comments/new', function (req, res) {
 })
 
 // Create route
-app.post('/campgrounds/:id/comments', function (req, res) {
+app.post('/campgrounds/:id/comments', isLoggedIn, function (req, res) {
 	// Find the campground by ID
 	Campground.findById(req.params.id, function (error, campground) {
 		if (error) {
@@ -151,7 +151,7 @@ app.post('/campgrounds/:id/comments', function (req, res) {
 
 // Show register form
 app.get('/register', function(req,res){
-	res.render('register')
+	res.render('register', {title: 'Register'})
 })
 
 // Handle Signup logic
@@ -160,7 +160,7 @@ app.post('/register', function(req, res){
 	User.register(newUser, req.body.password, function(error, user){
 		if(error){
 			console.log(error)
-			return res.render('register')
+			return res.redirect('/register')
 		}
 		passport.authenticate('local')(req,res, function (){
 			res.redirect('/campgrounds')
@@ -170,7 +170,7 @@ app.post('/register', function(req, res){
 
 // Show login form
 app.get('/login', function(req, res){
-	res.render('login')
+	res.render('login', {title: 'Login'})
 })
 
 // Handle loggin into the site
@@ -181,11 +181,22 @@ app.post('/login', passport.authenticate('local',
 	}
 ))
 
-// Handle loggin out of the site
+// Handle login out of the site
 app.get('/logout', function (req, res){
 	req.logout()
 	res.redirect('/')
 })
+
+//=========================
+//    Middleware
+//=========================
+
+function isLoggedIn(req, res, next){
+	if(req.isAuthenticated()){
+		return next()
+	}
+	res.redirect('/login')
+}
 
 //=================================================
 
