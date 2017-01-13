@@ -42,6 +42,11 @@ passport.use(new LocalStrategy(User.authenticate()))
 passport.serializeUser(User.serializeUser())
 passport.deserializeUser(User.deserializeUser())
 
+// Make req.user available to all routes must be declared after passport
+app.use(function(req, res, next){
+	res.locals.user = req.user
+	next()
+})
 
 //=========================
 //         ROUTES
