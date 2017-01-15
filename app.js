@@ -1,7 +1,7 @@
 // Initial required modules
 var express = require('express'),
 	app           = express(),
-	seedDB        = require('./seeds'),
+	// seedDB        = require('./seeds'),
 	passport      = require('passport'),
 	mongoose      = require('mongoose'),
 	bodyParser    = require('body-parser'),
@@ -17,7 +17,7 @@ var express = require('express'),
 mongoose.connect('mongodb://localhost/yelp_camp')
 
 // Run the seed DB to remove and repopulate the database
-seedDB()
+// seedDB()
 
 // Use body-parser middleware for getting information from post and put requests
 app.use(bodyParser.urlencoded({extended: true}))
