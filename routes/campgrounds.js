@@ -5,7 +5,8 @@
 // Setting up router
 var express = require('express'),
 	router  = express.Router(),
-	Campground = require('../models/campground')
+	Campground = require('../models/campground'),
+	isLoggedIn = require('../modules/checkLogin')
 
 // Index Route
 router.get('/', function (req, res) {
@@ -21,7 +22,7 @@ router.get('/', function (req, res) {
 })
 
 // Create route
-router.post('/', function (req, res) {
+router.post('/', isLoggedIn, function (req, res) {
 	var camp = req.body.camp
 	var image = req.body.image
 	var description = req.body.description
@@ -38,7 +39,7 @@ router.post('/', function (req, res) {
 })
 
 // New Route
-router.get('/new', function (req, res) {
+router.get('/new', isLoggedIn, function (req, res) {
 	res.render('campgrounds/new.ejs', {title: 'Submit Campground'})
 })
 
