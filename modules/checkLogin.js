@@ -1,6 +1,4 @@
-//=========================
-//    Middleware
-//=========================
+//  Authentication  Middleware
 
 function isLoggedIn(req, res, next){
 	if(req.isAuthenticated()){
