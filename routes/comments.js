@@ -83,4 +83,14 @@ router.put('/:comment', isLoggedIn, isAuthorized, function (req, res) {
 	})
 })
 
+// Delete
+router.delete('/:comment', isLoggedIn, isAuthorized, function (req, res) {
+	Comment.findByIdAndRemove(req.params.comment, function (error) {
+		if(error){
+			console.log('error')
+		}
+		res.redirect('/campgrounds/' + req.params.id)
+	})
+})
+
 module.exports = router
