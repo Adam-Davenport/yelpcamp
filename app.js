@@ -6,7 +6,8 @@ var express = require('express'),
 	mongoose      = require('mongoose'),
 	bodyParser    = require('body-parser'),
 	User          = require('./models/user'),
-	LocalStrategy = require('passport-local')
+	LocalStrategy = require('passport-local'),
+	methodOver    = require('method-override')
 
 
 //=======================
@@ -27,6 +28,9 @@ app.use('/public', express.static(__dirname + '/public'))
 
 // Set the templating engine to EJS
 app.set('view engine', 'ejs')
+
+// Setup method override to look for _method
+app.use(methodOver('_method'))
 
 // Passport Configuration
 app.use(require('express-session')({
