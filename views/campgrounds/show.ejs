@@ -1,4 +1,4 @@
-<%include ../partials/header %>
+<%include ../partials/header.ejs %>
 <div class="container">
 	<div class="row">
 		<div class="col-md-3">
@@ -16,24 +16,27 @@
 					<h4 class="pull-right">$9.00/night</h4>
 					<h4><a href=""><%=campground.name%></a></h4>
 					<p><strong>Submitted by: </strong><%= author.firstName + ' ' + author.lastName.substr(0,1)%></p>
+				<% if(user && user._id.equals(author.id)){ %>
+					<a href="/campgrounds/<%= campground._id %>/edit" class="btn btn-warning">Edit</a>
+					<form id="delete-form" action="/campgrounds/<%= campground._id %>?_method=DELETE" method="post">
+						<button class="btn btn-danger">Delete</button>
+					</form>
+				<%}%>
 					<p><%=campground.description%></p>
 				</div>
 			</div>
 			<div class="well">
 				<div class="text-right">
 					<a href="/campgrounds/<%=campground._id%>/comments/new" class="btn btn-primary">Add a comment</a>
-					<% if(user && user._id == author.id){ %>
-					<a href="/campgrounds/<%= campground._id %>/edit" class="btn btn-primary">Edit</a></div>
-					<%}%>
+				</div>
 				<hr>
 				<%campground.comments.forEach(function(comment){%>
 					<div class="row">
 						<div class="col-md-12">
 							<strong><%=comment.author.username%></strong>
 								<span class="pull-right">10 days ago</span>
-							<p>
-								<%=comment.text%>
-							</p>
+							<p><%=comment.text%></p>
+							<a href="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>/edit" class="btn btn-warning">Edit</a>
 						</div>
 					</div>
 				<%})%>
@@ -41,4 +44,4 @@
 		</div>
 	</div>
 </div>
-<%include ../partials/footer %>
+<%include ../partials/footer.ejs %>
