@@ -6,7 +6,8 @@
 var express = require('express'),
 	router  = express.Router(),
 	Campground = require('../models/campground'),
-	isLoggedIn = require('../modules/checkLogin')
+	isLoggedIn = require('../modules/checkLogin'),
+	User = require('../models/user')
 
 // Index Route
 router.get('/', function (req, res) {
@@ -27,6 +28,10 @@ router.post('/', isLoggedIn, function (req, res) {
 	var image = req.body.image
 	var description = req.body.description
 	var newCampground = {name: camp, image: image, description: description}
+	newCampground.author = {
+		username: req.user.username,
+		id: req.user._id
+	}
 	// Create a new campground and save to DB
 	Campground.create(newCampground, function (error) {
 		if (error) {
@@ -50,10 +55,41 @@ router.get('/:id', function (req, res) {
 		if (error) {
 			console.log(error)
 		}
-		else {
-			res.render('campgrounds/show', {title: foundCampground.name, campground: foundCampground})
+		User.findById(foundCampground.author.id, function (error, author) {
+			if(error){
+				console.log(error)
+			}
+			res.render('campgrounds/show', {title: foundCampground.name, campground: foundCampground, author: author})
+		})
+	})
+})
+
+// Edit Route
+router.get('/:id/edit', isLoggedIn, function (req, res) {
+	Campground.findById(req.params.id, function (error, foundCampground) {
+		if(error){
+			console.log(error)
+		}
+		if(req.user._id.toString() == foundCampground.author.id.toString()){
+			res.render('campgrounds/edit', {title: 'Edit Campground', campground: foundCampground})
+		}
+		else{
+			res.redirect('/campgrounds')
 		}
 	})
 })
+
+// Update Route
+router.put('/:id', function (req, res) {
+	// Find and update campground
+	Campground.findByIdAndUpdate(req.params.id, req.body.campground, function (error) {
+		if(error){
+			console.log(error)
+			res.redirect('/campgrounds')
+		}
+		res.redirect('/campgrounds/' + req.params.id)
+	})
+})
+
 
 module.exports = router
