@@ -1,11 +1,12 @@
-var mongoose = require("mongoose"),
-		plm = require("passport-local-mongoose"),
-
+var mongoose = require('mongoose'),
+		plm = require('passport-local-mongoose'),
 //  Define the User Schema
-		userSchema = new mongoose.Schema({
-			username: String,
-			password: String
-		})
+	userSchema = new mongoose.Schema({
+		username: String,
+		password: String,
+		firstName: String,
+		lastName: String
+	})
 
 // Plug in passport local mongoose to the user schema
 userSchema.plugin(plm)
