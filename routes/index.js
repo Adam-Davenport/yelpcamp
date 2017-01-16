@@ -5,7 +5,8 @@
 // Setting up router
 var express = require('express'),
 		router  = express.Router(),
-		passport = require('passport')
+		passport = require('passport'),
+		User     = require('../models/user')
 
 // Root Route
 router.get('/', function (req, res) {
@@ -23,7 +24,11 @@ router.get('/register', function(req,res){
 
 // Handle Signup logic
 router.post('/register', function(req, res){
-	var newUser = new User({username: req.body.username})
+	var newUser = new User({
+		username: req.body.username,
+		firstName: req.body.firstName,
+		lastName: req.body.lastName
+	})
 	User.register(newUser, req.body.password, function(error){
 		if(error){
 			console.log(error)
