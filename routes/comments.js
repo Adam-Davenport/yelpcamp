@@ -1,13 +1,12 @@
-//======================================
 //   Campground comment routes
-//======================================
 
 // Setting up router
 var express = require('express'),
 		router  = express.Router({mergeParams: true}),
 		Campground = require('../models/campground'),
 		Comment    = require('../models/comment'),
-		isLoggedIn = require('../modules/checkLogin')
+		isLoggedIn = require('../modules/checkLogin'),
+		isAuthorized = require('../modules/authorizeComment')
 
 // New route
 router.get('/new', isLoggedIn, function (req, res) {
@@ -49,6 +48,38 @@ router.post('/', isLoggedIn, function (req, res) {
 				}
 			})
 		}
+	})
+})
+
+// Edit
+router.get('/:comment/edit', isLoggedIn, isAuthorized, function(req, res){
+	Comment.findById(req.params.comment, function(error, foundComment){
+		if(error){
+			console.log(error)
+			res.redirect('back')
+		}
+		if(!foundComment){
+			console.log('No comment found')
+			res.redirect('back')
+		}
+		else{
+			res.render('comments/edit',
+			{
+				title: 'Edit Comment',
+				comment: foundComment,
+				url: '/campgrounds/'+ req.params.id + '/comments/' + foundComment._id
+			})
+		}
+	})
+})
+
+// Update
+router.put('/:comment', isLoggedIn, isAuthorized, function (req, res) {
+	Comment.findByIdAndUpdate(req.params.comment, req.body.comment, function (error) {
+		if(error){
+			console.log('error')
+		}
+			res.redirect('/campgrounds/'+ req.params.id)
 	})
 })
 
