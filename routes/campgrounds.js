@@ -5,9 +5,10 @@
 // Setting up router
 var express = require('express'),
 	router  = express.Router(),
+	User = require('../models/user'),
 	Campground = require('../models/campground'),
 	isLoggedIn = require('../modules/checkLogin'),
-	User = require('../models/user')
+	isAuthorized = require('../modules/authorizeCampground')
 
 // Index Route
 router.get('/', function (req, res) {
@@ -65,22 +66,18 @@ router.get('/:id', function (req, res) {
 })
 
 // Edit Route
-router.get('/:id/edit', isLoggedIn, function (req, res) {
+router.get('/:id/edit', isLoggedIn, isAuthorized, function (req, res) {
 	Campground.findById(req.params.id, function (error, foundCampground) {
 		if(error){
 			console.log(error)
+			res.redirect('back')
 		}
-		if(req.user._id.toString() == foundCampground.author.id.toString()){
 			res.render('campgrounds/edit', {title: 'Edit Campground', campground: foundCampground})
-		}
-		else{
-			res.redirect('/campgrounds')
-		}
 	})
 })
 
 // Update Route
-router.put('/:id', function (req, res) {
+router.put('/:id', isAuthorized, function (req, res) {
 	// Find and update campground
 	Campground.findByIdAndUpdate(req.params.id, req.body.campground, function (error) {
 		if(error){
@@ -88,6 +85,27 @@ router.put('/:id', function (req, res) {
 			res.redirect('/campgrounds')
 		}
 		res.redirect('/campgrounds/' + req.params.id)
+	})
+})
+
+// Delete Request
+router.delete('/:id', isLoggedIn, isAuthorized, function (req, res) {
+	Campground.findById(req.params.id, function (error, foundCampground) {
+		if(error){
+			console.log(error)
+			res.redirect('back')
+		}
+		if(!foundCampground){
+			console.log('No campground found')
+			res.redirect(back)
+		}
+		if(foundCampground.author.id.equals(req.user.id)) {
+			foundCampground.remove()
+			res.redirect('/campgrounds')
+		}
+		else{
+			res.redirect('/campgrounds')
+		}
 	})
 })
 
