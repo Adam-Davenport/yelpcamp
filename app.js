@@ -56,8 +56,8 @@ app.use(function(req, res, next){
 //=======================
 
 var campgroundRoutes = require('./routes/campgrounds'),
-	commentRoutes    = require('./routes/comments'),
-	authRoutes       = require('./routes/index')
+		commentRoutes    = require('./routes/comments'),
+		authRoutes       = require('./routes/index')
 
 app.use('/campgrounds', campgroundRoutes)
 app.use('/campgrounds/:id/comments', commentRoutes)
