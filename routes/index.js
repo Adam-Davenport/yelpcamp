@@ -1,6 +1,4 @@
-//=========================
 //         ROUTES
-//=========================
 
 // Setting up router
 var express = require('express'),
@@ -24,7 +22,6 @@ router.get('/register', function(req,res){
 
 // Handle Signup logic
 router.post('/register', function(req, res){
-	console.log('here')
 	var newUser = new User({
 		username: req.body.username,
 		firstName: req.body.firstName,
