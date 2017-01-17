@@ -1,9 +1,11 @@
-<% include partials/header %>
-<h1>Log In</h1>
-
-<form action="/login" method="post">
-	<input type="text" name="username" placeholder="username">
-	<input type="password" name="password" placeholder="password">
-	<button>Login</button>
-</form>
-<% include partials/footer %>
+<% include partials/header.ejs %>
+<link rel="stylesheet" href="/public/css/signin.css">
+<div class="container">
+    <form action="/login" method="post" class="form-signin">
+        <h1 class="form-signin-heading">Sign In</h1>
+        <input type="text" name="username" placeholder="username" class="form-control" autofocus>
+        <input type="password" name="password" placeholder="password" class="form-control">
+        <button class="btn btn-primary form-control">Login</button>
+    </form>
+</div>
+<% include partials/footer.ejs %>
