@@ -15,7 +15,7 @@ var express = require('express'),
 //=======================
 
 // Connect to database
-mongoose.connect('mongodb://localhost/yelp_camp')
+mongoose.connect('mongodb://adam:secretPassword@10.0.0.3/yelp_camp')
 
 // Run the seed DB to remove and repopulate the database
 // seedDB()
