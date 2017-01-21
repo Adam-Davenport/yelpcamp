@@ -1,11 +1,14 @@
 <%include partials/header.ejs%>
-<h1>Sign Up!</h1>
+<link rel="stylesheet" href="/public/css/signin.css">
+<div class="container">
+	<form action="/register" method="post" class="form-signin">
+		<h1 class="form-signin-heading">Sign Up!</h1>
+		<input type="text" name="username" placeholder="username" class="form-control" autofocus>
+		<input type="text" name="firstName" placeholder="First Name" class="form-control">
+		<input type="text" name="lastName" placeholder="Last Name" class="form-control">
+		<input type="password" name="password" placeholder="password" class="form-control">
+		<button class="btn btn-primary form-control">Sign Up</button>
+	</form>
 
-<form action="/register" method="post">
-	<input type="text" name="username" placeholder="username">
-	<input type="text" name="firstName" placeholder="First Name">
-	<input type="text" name="lastName" placeholder="Last Name">
-	<input type="password" name="password" placeholder="password">
-	<button>Sign Up</button>
-</form>
+</div>
 <%include partials/footer.ejs%>
