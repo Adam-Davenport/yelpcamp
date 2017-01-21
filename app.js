@@ -6,6 +6,7 @@ var express = require('express'),
 	mongoose      = require('mongoose'),
 	bodyParser    = require('body-parser'),
 	User          = require('./models/user'),
+	flash         = require('connect-flash'),
 	LocalStrategy = require('passport-local'),
 	methodOver    = require('method-override')
 
@@ -16,6 +17,9 @@ var express = require('express'),
 
 // Connect to database
 mongoose.connect('mongodb://localhost/yelp_camp')
+
+// Use bluebird
+mongoose.Promise = require('bluebird')
 
 // Run the seed DB to remove and repopulate the database
 // seedDB()
@@ -31,6 +35,9 @@ app.set('view engine', 'ejs')
 
 // Setup method override to look for _method
 app.use(methodOver('_method'))
+
+// Setting up flash messages
+app.use(flash())
 
 // Passport Configuration
 app.use(require('express-session')({
