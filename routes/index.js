@@ -8,7 +8,9 @@ var express = require('express'),
 
 // Root Route
 router.get('/', function (req, res) {
-	res.render('landing', {title: 'YelpCamp'})
+	// res.render('landing', {title: 'YelpCamp'})
+	// Redirecting to campgrounds page until the landing page is complete
+	res.redirect('/campgrounds')
 })
 
 //========================
