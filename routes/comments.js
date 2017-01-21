@@ -3,8 +3,8 @@
 // Setting up router
 var express = require('express'),
 		router  = express.Router({mergeParams: true}),
-		Campground = require('../models/campground'),
 		Comment    = require('../models/comment'),
+		Campground = require('../models/campground'),
 		isLoggedIn = require('../modules/checkLogin'),
 		isAuthorized = require('../modules/authorizeComment')
 
