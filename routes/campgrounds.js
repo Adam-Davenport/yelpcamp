@@ -1,6 +1,4 @@
-//=====================
 // Campground Routes
-//=====================
 
 // Setting up router
 var express = require('express'),
@@ -15,7 +13,8 @@ router.get('/', function (req, res) {
 	// Get all campgrounds from DB
 	Campground.find({}, function (error, campgrounds) {
 		if (error) {
-			console.log(error)
+			req.flash('error', 'Error retrieving campgrounds.')
+			res.redirect('/')
 		}
 		else {
 			res.render('campgrounds/index', {title: 'Campgrounds', campgrounds: campgrounds})
@@ -36,9 +35,11 @@ router.post('/', isLoggedIn, function (req, res) {
 	// Create a new campground and save to DB
 	Campground.create(newCampground, function (error) {
 		if (error) {
-			console.log(error)
+			req.flash('error', 'Error creating campground')
+			res.redirect('/campgrounds')
 		}
 		else {
+			req.flash('success', 'Successfully created campground')
 			res.redirect('/campgrounds')
 		}
 	})
@@ -54,14 +55,20 @@ router.get('/:id', function (req, res) {
 	// Find campground and populate the comments from the DB
 	Campground.findById(req.params.id).populate('comments').exec(function (error, foundCampground) {
 		if (error) {
-			console.log(error)
+			req.flash('error', 'Unable to find campground.')
+			res.redirect('/campgrounds')
 		}
-		User.findById(foundCampground.author.id, function (error, author) {
-			if(error){
-				console.log(error)
+		else{
+			if(!foundCampground){
+				req.flash('error', 'Unable to find campground')
+				res.redirect('/campgrounds')
 			}
-			res.render('campgrounds/show', {title: foundCampground.name, campground: foundCampground, author: author})
-		})
+			else{
+				User.findById(foundCampground.author.id, function (error, author) {
+					res.render('campgrounds/show', {title: foundCampground.name, campground: foundCampground, author: author})
+				})
+			}
+		}
 	})
 })
 
@@ -70,7 +77,12 @@ router.get('/:id/edit', isLoggedIn, isAuthorized, function (req, res) {
 	Campground.findById(req.params.id, function (error, foundCampground) {
 		if(error){
 			console.log(error)
-			res.redirect('back')
+			req.flash('error', error.message)
+			res.redirect('/campgrounds')
+		}
+		if(foundCampground == null){
+			req.flash('error', 'Unable to find campground')
+			res.redirect('/campgrounds')
 		}
 			res.render('campgrounds/edit', {title: 'Edit Campground', campground: foundCampground})
 	})
@@ -79,12 +91,19 @@ router.get('/:id/edit', isLoggedIn, isAuthorized, function (req, res) {
 // Update Route
 router.put('/:id', isAuthorized, function (req, res) {
 	// Find and update campground
-	Campground.findByIdAndUpdate(req.params.id, req.body.campground, function (error) {
+	Campground.findByIdAndUpdate(req.params.id, req.body.campground, function (error, updatedCampground) {
 		if(error){
-			console.log(error)
+			req.flash('error', 'Unable to find campground')
 			res.redirect('/campgrounds')
 		}
-		res.redirect('/campgrounds/' + req.params.id)
+		if(!updatedCampground){
+			req.flash('error', 'Unable to find campground')
+			res.redirect('/campgrounds')
+		}
+		else{
+			req.flash('success', 'Successfully updated campground.')
+			res.redirect('/campgrounds/' + req.params.id)
+		}
 	})
 })
 
@@ -93,17 +112,20 @@ router.delete('/:id', isLoggedIn, isAuthorized, function (req, res) {
 	Campground.findById(req.params.id, function (error, foundCampground) {
 		if(error){
 			console.log(error)
+			req.flash('error', error.message)
 			res.redirect('back')
 		}
 		if(!foundCampground){
-			console.log('No campground found')
+			req.flash('error', 'Unable to find campground.')
 			res.redirect(back)
 		}
 		if(foundCampground.author.id.equals(req.user.id)) {
 			foundCampground.remove()
+			req.flash('success', 'Successfully deleted campground.')
 			res.redirect('/campgrounds')
 		}
 		else{
+			req.flash('error', 'You are not authorized to do that.')
 			res.redirect('/campgrounds')
 		}
 	})
