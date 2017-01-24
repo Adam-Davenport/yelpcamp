@@ -55,6 +55,9 @@ passport.deserializeUser(User.deserializeUser())
 // Make req.user available to all routes must be declared after passport
 app.use(function(req, res, next){
 	res.locals.user = req.user
+	res.locals.error = req.flash('error')
+	res.locals.message = req.flash('message')
+	res.locals.success = req.flash('success')
 	next()
 })
 
