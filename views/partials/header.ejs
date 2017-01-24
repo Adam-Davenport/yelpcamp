@@ -29,3 +29,12 @@
 		</div>
 	</div>
 </nav>
+<%if(message != ''){%>
+	<div class="alert alert-info text-center"><%=message%></div>
+<%}%>
+<%if(error != ''){%>
+	<div class="alert alert-danger text-center"><%=error%></div>
+<%}%>
+<%if(success != ''){%>
+	<div class="alert alert-success text-center"><%=success%></div>
+<%}%>
