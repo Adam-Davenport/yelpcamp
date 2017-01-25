@@ -8,15 +8,17 @@ function authorize(req, res , next) {
 			req.flash('error', error.message)
 			res.redirect('back')
 		}
+		else if(!foundCampground){
+			req.flash('error', 'Campground not found.')
+			res.redirect('/campgrounds')
+		}
+		else if(req.user._id.equals(foundCampground.author.id)){
+			return next()
+		}
 		else{
-			if(req.user._id.equals(foundCampground.author.id)){
-				return next()
-			}
-			else{
-				console.log('unauthorized request')
-				req.flash('error', 'You are not authorized to do that operation')
-				res.redirect('/campgrounds')
-			}
+			console.log('unauthorized request')
+			req.flash('error', 'You are not authorized to do that operation')
+			res.redirect('/campgrounds')
 		}
 	})
 }
