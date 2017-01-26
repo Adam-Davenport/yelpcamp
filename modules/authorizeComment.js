@@ -15,8 +15,8 @@ function authorize(req, res, next){
 			next()
 		}
 		else{
-			req.flash('Error', 'You are not authorized to do that operation')
-			res.redirect('back')
+			req.flash('error', 'You are not authorized to do that operation')
+			res.redirect('/campgrounds/' + req.params.id)
 		}
 	})
 }
