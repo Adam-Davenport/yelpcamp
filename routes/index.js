@@ -49,12 +49,17 @@ router.get('/login', function(req, res){
 })
 
 // Handle login into the site
-router.post('/login', passport.authenticate('local',
-	{
-		successRedirect: '/campgrounds',
-		failureRedirect: '/login'
+router.post('/login', passport.authenticate('local', {failureRedirect: '/login', failureFlash: true}), function(req, res) {
+	req.flash('success', 'Successfully signed in.')
+	if(req.session.returnTo){
+		var destination = req.session.returnTo
+		delete req.session.returnTo
+		res.redirect(destination)
 	}
-))
+	else{
+		res.redirect('/');
+	}
+})
 
 // Handle login out of the site
 router.get('/logout', function (req, res){
