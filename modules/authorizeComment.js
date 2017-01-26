@@ -7,15 +7,16 @@ function authorize(req, res, next){
 			req.flash('error', error.message)
 			res.redirect('back')
 		}
+		else if(!foundComment){
+			req.flash('error', 'Unable to find comment')
+			res.redirect('back')
+		}
+		else if(req.user._id.equals(foundComment.author.id)){
+			next()
+		}
 		else{
-			console.log(foundComment)
-			if(req.user._id.equals(foundComment.author.id)){
-				next()
-			}
-			else{
-				req.flash('Error', 'You are not authorized to do that operation')
-				res.redirect('back')
-			}
+			req.flash('Error', 'You are not authorized to do that operation')
+			res.redirect('back')
 		}
 	})
 }
