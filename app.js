@@ -39,7 +39,7 @@ app.use(methodOver('_method'))
 // Setting up flash messages
 app.use(flash())
 
-// Passport Configuration
+// Session Configuration
 app.use(require('express-session')({
 	secret: "This is a message for authentication of the system",
 	resave: false,
