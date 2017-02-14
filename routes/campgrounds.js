@@ -25,15 +25,12 @@ router.get('/', function (req, res) {
 // Create route
 router.post('/', isLoggedIn, function (req, res) {
 	var camp = req.body.camp
-	var image = req.body.image
-	var description = req.body.description
-	var newCampground = {name: camp, image: image, description: description}
-	newCampground.author = {
+	camp.author ={
 		username: req.user.username,
 		id: req.user._id
 	}
 	// Create a new campground and save to DB
-	Campground.create(newCampground, function (error) {
+	Campground.create(camp, function (error) {
 		if (error) {
 			req.flash('error', error.message)
 			res.redirect('/campgrounds')
@@ -91,9 +88,9 @@ router.get('/:id/edit', isLoggedIn, isAuthorized, function (req, res) {
 // Update Route
 router.put('/:id', isAuthorized, function (req, res) {
 	// Find and update campground
-	Campground.findByIdAndUpdate(req.params.id, req.body.campground, function (error, updatedCampground) {
+	Campground.findByIdAndUpdate(req.params.id, req.body.camp, function (error, updatedCampground) {
 		if(error){
-			req.flash('error', 'Unable to find campground')
+			req.flash('error', error.message)
 			res.redirect('/campgrounds')
 		}
 		else if(!updatedCampground){
