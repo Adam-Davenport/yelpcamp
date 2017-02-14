@@ -1,7 +1,6 @@
 // Initial required modules
 var express = require('express'),
 	app           = express(),
-	// seedDB        = require('./seeds'),
 	passport      = require('passport'),
 	mongoose      = require('mongoose'),
 	bodyParser    = require('body-parser'),
@@ -20,9 +19,6 @@ mongoose.connect('mongodb://localhost/yelp_camp')
 
 // Use bluebird
 mongoose.Promise = require('bluebird')
-
-// Run the seed DB to remove and repopulate the database
-// seedDB()
 
 // Use body-parser middleware for getting information from post and put requests
 app.use(bodyParser.urlencoded({extended: true}))
