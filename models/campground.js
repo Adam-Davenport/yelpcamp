@@ -4,6 +4,7 @@ var campgroundSchema = new mongoose.Schema({
 	name: String,
 	image: String,
 	description: String,
+	cost: Number,
 	// Storing the user who created the campground
 	author: {
 		id: {
@@ -12,7 +13,6 @@ var campgroundSchema = new mongoose.Schema({
 		},
 		username: String
 	},
-	// Storing association on the campground will be refactored to normal db relationship later
 	comments: [
 		{
 			type: mongoose.Schema.Types.ObjectId,
