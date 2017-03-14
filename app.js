@@ -15,7 +15,7 @@ var express = require('express'),
 //=======================
 
 // Connect to database
-mongoose.connect('mongodb://localhost/yelp_camp')
+mongoose.connect('mongodb://10.0.0.21/yelp_camp')
 
 // Use bluebird
 mongoose.Promise = require('bluebird')
