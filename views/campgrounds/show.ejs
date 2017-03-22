@@ -22,6 +22,7 @@
 						<button class="btn btn-danger">Delete</button>
 					</form>
 				<%}%>
+					<p><strong>Score:</strong> <%= campground.score %> /5</p>
 					<p><%=campground.description%></p>
 				</div>
 			</div>
@@ -33,13 +34,15 @@
 				<%campground.comments.forEach(function(comment){%>
 					<div class="row">
 						<div class="col-md-12">
-							<strong><%=comment.author.username %></strong> <%= comment.score %>/5
-							<span class="pull-right">10 days ago</span>
+							<strong><%=comment.author.username %>:</strong> <%= comment.score %>/5
+							<span class="pull-right"><%= comment.time.toDateString() %></span>
 							<p><%=comment.text%></p>
+                            <% if(user && user._id.equals(author.id)){ %>
 							<a href="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>/edit" class="btn btn-xs btn-default edit">Edit</a>
 							<form class="comment-delete" action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=DELETE" method="post">
 								<button class="btn btn-xs btn-default delete">Delete</button>
 							</form>
+                            <% } %>
 						</div>
 					</div>
 				<%})%>
