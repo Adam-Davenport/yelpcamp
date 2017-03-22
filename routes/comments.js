@@ -22,6 +22,11 @@ router.get('/new', isLoggedIn, function (req, res) {
 	})
 })
 
+// Root redirection
+router.get('/', function (req, res) {
+	res.redirect('/campgrounds/' + req.params.id)
+})
+
 // Create route
 router.post('/', isLoggedIn, function (req, res) {
 	// Find the campground by ID
@@ -43,6 +48,22 @@ router.post('/', isLoggedIn, function (req, res) {
 					comment.save()
 					// Adding the comment
 					campground.comments.push(comment)
+					console.log(campground.comments)
+					//Update score of campground
+					var score = 0
+					campground.comments.forEach(function (comment) {
+						score += parseInt(comment.score)
+						console.log(score)
+						console.log(comment)
+						console.log(campground.comments.length)
+					})
+					if(campground.comments.length > 0)
+					{
+						campground.score = parseInt(score)
+					}
+					else{
+						campground.score = 0
+					}
 					campground.save()
 					res.redirect('/campgrounds/' + campground._id)
 				}
