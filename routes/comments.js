@@ -30,7 +30,7 @@ router.get('/', function (req, res) {
 // Create route
 router.post('/', isLoggedIn, function (req, res) {
 	// Find the campground by ID
-	Campground.findById(req.params.id, function (error, campground) {
+	Campground.findById(req.params.id).populate('comments').exec(function (error, campground) {
 		if (error) {
 			console.log(error)
 			res.redirect('/campgrounds')
@@ -48,22 +48,6 @@ router.post('/', isLoggedIn, function (req, res) {
 					comment.save()
 					// Adding the comment
 					campground.comments.push(comment)
-					console.log(campground.comments)
-					//Update score of campground
-					var score = 0
-					campground.comments.forEach(function (comment) {
-						score += parseInt(comment.score)
-						console.log(score)
-						console.log(comment)
-						console.log(campground.comments.length)
-					})
-					if(campground.comments.length > 0)
-					{
-						campground.score = parseInt(score)
-					}
-					else{
-						campground.score = 0
-					}
 					campground.save()
 					res.redirect('/campgrounds/' + campground._id)
 				}
