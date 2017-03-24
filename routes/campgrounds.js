@@ -61,7 +61,23 @@ router.get('/:id', function (req, res) {
 		}
 		else{
 			User.findById(foundCampground.author.id, function (error, author) {
-				res.render('campgrounds/show', {title: foundCampground.name, campground: foundCampground, author: author})
+				if(error){
+					req.flash(error.message)
+					res.redirect('/campgrounds')
+				}
+				else{
+					if(foundCampground.comments.length > 0){
+						var score = 0
+						foundCampground.comments.forEach(function (comment) {
+							score += comment.score
+							console.log(score)
+						})
+						score = score/foundCampground.comments.length
+						foundCampground.score = Math.round(score,2)
+					}
+
+					res.render('campgrounds/show', {title: foundCampground.name, campground: foundCampground, author: author})
+				}
 			})
 		}
 	})
