@@ -1,16 +1,17 @@
-$(document).ready(function () {
-	buttonHover('.edit' ,'btn-warning')
-	buttonHover('.delete', 'btn-danger')
-}
+$('.edit').hover(
+	function () {
+		$(this).addClass('btn-warning')
+	},
+	function () {
+		$(this).removeClass('btn-warning')
+	}
 )
 
-function buttonHover(button, change){
-	$(button).hover(
-		function () {
-			$(button).addClass(change)
-		},
-		function () {
-			$(button).removeClass(change)
-		}
-	)
-}
+$('.delete').hover(
+	function () {
+		$(this).addClass('btn-danger')
+	},
+	function () {
+		$(this).removeClass('btn-danger')
+	}
+)
