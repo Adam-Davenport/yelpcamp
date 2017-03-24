@@ -5,7 +5,6 @@ var campgroundSchema = new mongoose.Schema({
 	image: String,
 	description: String,
 	cost: Number,
-	score: Number,
 	// Storing the user who created the campground
 	author: {
 		id: {
@@ -21,16 +20,6 @@ var campgroundSchema = new mongoose.Schema({
 		}
 	]
 });
-
-// Calculate Scores
-campgroundSchema.methods.calculateScores = function () {
-	var score = 0
-	this.comments.forEach(function (comment) {
-		score += comment.score
-	})
-	this.score = score/(this.comments.length-1)
-	this.save()
-}
 
 // Export the campgroundSchema as a model
 module.exports = mongoose.model("Campground", campgroundSchema);
