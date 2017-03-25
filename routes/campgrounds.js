@@ -67,13 +67,13 @@ router.get('/:id', function (req, res) {
 				}
 				else{
 					if(foundCampground.comments.length > 0){
-						var score = 0
+						var score = 0.0
 						foundCampground.comments.forEach(function (comment) {
 							score += comment.score
 							console.log(score)
 						})
-						score = score/foundCampground.comments.length
-						foundCampground.score = Math.round(score,2)
+						score = Math.round(score/foundCampground.comments.length, 1)
+						foundCampground.score = score
 					}
 
 					res.render('campgrounds/show', {title: foundCampground.name, campground: foundCampground, author: author})
