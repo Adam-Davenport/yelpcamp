@@ -72,7 +72,9 @@ router.get('/:id', function (req, res) {
 							score += comment.score
 							console.log(score)
 						})
-						score = Math.round(score/foundCampground.comments.length, 1)
+						// Calculating and rounding average score to 1 decimal
+						score = score/foundCampground.comments.length
+						score = score.toFixed(1)
 						foundCampground.score = score
 					}
 
