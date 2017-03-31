@@ -6,7 +6,7 @@ function isLoggedIn(req, res, next){
 		return next()
 	}
 	req.flash('error', 'Please log in or sign up first.')
-	res.redirect('/login')
+	res.render('loginredirect.ejs', {title: 'Login or Sign Up'})
 }
 
 module.exports = isLoggedIn
