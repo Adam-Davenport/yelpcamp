@@ -25,21 +25,31 @@ router.get('/', function (req, res) {
 // Create route
 router.post('/', isLoggedIn, function (req, res) {
 	var camp = req.body.camp
-	camp.author ={
-		username: req.user.username,
-		id: req.user._id
+	if(!req.body.camp){
+		req.flash('error', 'Unable to process campground.')
+		res.redirect('/campgrounds/new')
 	}
-	// Create a new campground and save to DB
-	Campground.create(camp, function (error) {
-		if (error) {
-			req.flash('error', error.message)
-			res.redirect('/campgrounds')
+	else if(!camp.name || !camp.image || parseFloat(camp.cost) || !camp.description){
+		req.flash('error', 'Please fill out the entire form.')
+		res.redirect('/campgrounds/new')
+	}
+	else{
+		camp.author ={
+			username: req.user.username,
+			id: req.user._id
 		}
-		else {
-			req.flash('success', 'Successfully created campground')
-			res.redirect('/campgrounds')
-		}
-	})
+		// Create a new campground and save to DB
+		Campground.create(camp, function (error) {
+			if (error) {
+				req.flash('error', error.message)
+				res.redirect('/campgrounds')
+			}
+			else {
+				req.flash('success', 'Successfully created campground')
+				res.redirect('/campgrounds')
+			}
+		})
+	}
 })
 
 // New Route
