@@ -16,3 +16,7 @@
 .comment-delete{
 	display: inline;
 }
+
+.comment{
+	padding-bottom: 20px;
+}
