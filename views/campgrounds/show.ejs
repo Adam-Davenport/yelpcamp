@@ -12,7 +12,12 @@
 				<button class="btn btn-danger">Delete</button>
 			</form>
 		<%}%>
-			<p><strong>Score:</strong> <%= campground.score %> / 5</p>
+			<p>
+				<strong>Score:</strong>
+				<% if(campground.score > 0){ %>
+                    <%= campground.score %> / 5
+				<% } %>
+			</p>
 			<p><%=campground.description%></p>
 		</div>
 	</div>
