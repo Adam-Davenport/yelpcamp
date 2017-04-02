@@ -80,7 +80,6 @@ router.get('/:id', function (req, res) {
 						var score = 0.0
 						foundCampground.comments.forEach(function (comment) {
 							score += comment.score
-							console.log(score)
 						})
 						// Calculating and rounding average score to 1 decimal
 						score = score/foundCampground.comments.length
@@ -99,7 +98,6 @@ router.get('/:id', function (req, res) {
 router.get('/:id/edit', isLoggedIn, isAuthorized, function (req, res) {
 	Campground.findById(req.params.id, function (error, foundCampground) {
 		if(error){
-			console.log(error)
 			req.flash('error', error.message)
 			res.redirect('/campgrounds')
 		}
@@ -136,7 +134,6 @@ router.put('/:id', isAuthorized, function (req, res) {
 router.delete('/:id', isLoggedIn, isAuthorized, function (req, res) {
 	Campground.findById(req.params.id, function (error, foundCampground) {
 		if(error){
-			console.log(error)
 			req.flash('error', error.message)
 			res.redirect('back')
 		}
