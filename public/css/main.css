@@ -20,3 +20,7 @@
 .comment{
 	padding-bottom: 20px;
 }
+
+.review-header{
+	display: inline-block;
+}
