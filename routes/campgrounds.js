@@ -86,8 +86,9 @@ router.get('/:id', function (req, res) {
 						score = score.toFixed(1)
 						foundCampground.score = score
 					}
-
-					res.render('campgrounds/show', {title: foundCampground.name, campground: foundCampground, author: author})
+					else{
+						res.render('campgrounds/show', {title: foundCampground.name, campground: foundCampground, author: author})
+					}
 				}
 			})
 		}
