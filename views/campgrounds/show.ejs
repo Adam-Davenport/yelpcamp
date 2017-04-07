@@ -22,11 +22,14 @@
 		</div>
 	</div>
 	<div class="well">
-		<div class="text-right">
-			<a href="/campgrounds/<%=campground._id%>/comments/new" class="btn btn-primary">Add a comment</a>
+		<div class="review">
+			<h2 class="review-header">Reviews</h2>
+			<div class="text-right">
+				<a href="/campgrounds/<%=campground._id%>/comments/new" class="btn btn-primary">Add a comment</a>
+			</div>
 		</div>
-		<hr>
 		<%campground.comments.forEach(function(comment){%>
+		<hr>
 			<div class="row comment">
 				<div class="col-md-12">
 					<strong><%=comment.author.username %>:</strong> <%= comment.score %>/5
